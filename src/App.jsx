@@ -1,4 +1,7 @@
 import React from 'react';
+import { AuthProvider } from './context/AuthContext';
+import { NavigationProvider } from './context/NavigationContext';
+import { useNavigation } from './hooks/useNavigation';
 import { Navbar, Container, Divider } from './components';
 import Hero from './sections/Hero';
 import NeuralNetworkSection from './sections/NeuralNetworkSection';
@@ -8,8 +11,10 @@ import Skills from './sections/Skills';
 import Experience from './sections/Experience';
 import Resume from './sections/Resume';
 import Contact from './sections/Contact';
+import AdminLogin from './admin/AdminLogin';
+import AdminDashboard from './admin/AdminDashboard';
 
-export default function App() {
+function PortfolioView() {
   return (
     <div style={{ minHeight: '100vh', backgroundColor: 'var(--color-bg)' }}>
       {/* Sticky Top Navigation */}
@@ -69,5 +74,29 @@ export default function App() {
         <Contact />
       </main>
     </div>
+  );
+}
+
+function AppContent() {
+  const { currentPath } = useNavigation();
+
+  if (currentPath === '/admin/login') {
+    return <AdminLogin />;
+  }
+
+  if (currentPath === '/admin/dashboard') {
+    return <AdminDashboard />;
+  }
+
+  return <PortfolioView />;
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <NavigationProvider>
+        <AppContent />
+      </NavigationProvider>
+    </AuthProvider>
   );
 }

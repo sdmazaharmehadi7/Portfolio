@@ -21,4 +21,12 @@ export default defineConfig([
       'no-unused-vars': ['error', { varsIgnorePattern: '^React$' }],
     },
   },
+  {
+    files: ['backend/**/*.js'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
 ])

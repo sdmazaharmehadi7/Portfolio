@@ -1,9 +1,10 @@
 import { Container, SectionHeading } from '../components';
-import { aboutData } from '../data/portfolioData';
+import { usePortfolioData } from '../hooks/usePortfolioData';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 export default function About() {
   const [sectionRef, isVisible] = useScrollReveal(0.12);
+  const { about } = usePortfolioData();
 
   return (
     <section
@@ -20,7 +21,7 @@ export default function About() {
       <Container>
         <SectionHeading
           tag="// PROFILE // BACKGROUND"
-          title={aboutData.title}
+          title={about.title}
         />
 
         {/* Two-Column Editorial Layout */}
@@ -35,7 +36,7 @@ export default function About() {
         >
           {/* Left Column: Narrative Statement */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', maxWidth: '640px' }}>
-            {aboutData.paragraphs.map((para, idx) => (
+            {about.paragraphs.map((para, idx) => (
               <p
                 key={idx}
                 style={{
@@ -84,7 +85,7 @@ export default function About() {
                   letterSpacing: '-0.01em'
                 }}
               >
-                {aboutData.academic.degree}
+                {about.academic.degree}
               </div>
             </div>
 
@@ -109,7 +110,7 @@ export default function About() {
                   lineHeight: 1.4
                 }}
               >
-                {aboutData.academic.institution}
+                {about.academic.institution}
               </div>
             </div>
 
@@ -135,7 +136,7 @@ export default function About() {
                   letterSpacing: '-0.02em'
                 }}
               >
-                {aboutData.academic.cgpa}
+                {about.academic.cgpa}
                 <span style={{ fontSize: '0.9rem', color: 'var(--color-muted)', marginLeft: '0.35rem', fontWeight: 400 }}>
                   / 10.0
                 </span>

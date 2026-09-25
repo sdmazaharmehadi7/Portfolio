@@ -1,28 +1,44 @@
 import React, { useState } from 'react';
 import { Container, SectionHeading } from '../components';
-import { experienceData } from '../data/portfolioData';
+import { usePortfolioData } from '../hooks/usePortfolioData';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 export default function Experience() {
   const [sectionRef, isVisible] = useScrollReveal(0.12);
   const [hoveredItem, setHoveredItem] = useState(null);
+  const { experiences, achievements, education, certifications } = usePortfolioData();
 
   const sections = [
     {
       heading: '// 01. PROFESSIONAL EXPERIENCE',
       title: 'Internships',
-      items: experienceData.internships
+      items: experiences
     },
     {
       heading: '// 02. COMPETITIONS & LEADERSHIP',
       title: 'Achievements & Activities',
-      items: experienceData.achievements
+      items: achievements
     },
     {
       heading: '// 03. ACADEMIC FOUNDATION',
       title: 'Education',
-      items: experienceData.education
-    }
+      items: education
+    },
+    ...(certifications && certifications.length > 0
+      ? [
+          {
+            heading: '// 04. CREDENTIALS & CERTIFICATIONS',
+            title: 'Certifications',
+            items: certifications.map((c) => ({
+              period: c.issue_date || 'Certified',
+              title: c.title,
+              organization: c.issuer,
+              focus: 'Credential',
+              description: `Official certification issued by ${c.issuer}.`
+            }))
+          }
+        ]
+      : [])
   ];
 
   return (

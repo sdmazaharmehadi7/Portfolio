@@ -7,13 +7,17 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "db:migrate": "node backend/scripts/migrate.js",
+    "db:seed": "node backend/scripts/migrate.js"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.117.2",
     "canvas-confetti": "^1.9.4",
     "lenis": "^1.3.26",
     "lucide-react": "^1.48.0",
     "motion": "^13.4.3",
+    "pg": "^8.23.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "three": "^0.186.1"

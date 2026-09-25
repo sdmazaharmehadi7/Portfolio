@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import Container from './Container';
-import { personalInfo } from '../data/portfolioData';
+import { usePortfolioData } from '../hooks/usePortfolioData';
+import { useNavigation } from '../hooks/useNavigation';
 
 const NAV_LINKS = [
   { label: 'Projects', href: '#projects' },
   { label: 'About', href: '#about' },
   { label: 'Skills', href: '#skills' },
-  { label: 'Experience', href: '#experience' }
+  { label: 'Experience', href: '#experience' },
+  { label: 'Admin', href: '/admin/login' }
 ];
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { profile } = usePortfolioData();
+  const { navigate } = useNavigation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,12 +42,27 @@ export default function Navbar() {
 
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
+  const handleNavLinkClick = (e, href) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+    e.preventDefault();
+    closeMobileMenu();
+    navigate(href);
+  };
+
+  const handleBrandClick = (e) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+    e.preventDefault();
+    closeMobileMenu();
+    navigate('/');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const handleLetsTalkClick = (e) => {
     if (e.metaKey || e.ctrlKey || e.shiftKey) return;
     e.preventDefault();
-    const win = window.open(personalInfo.gmailComposeUrl, '_blank');
+    const win = window.open(profile.gmailComposeUrl, '_blank');
     if (!win || win.closed || typeof win.closed === 'undefined') {
-      window.location.href = personalInfo.gmailComposeUrl;
+      window.location.href = profile.gmailComposeUrl;
     }
   };
 
@@ -51,9 +70,9 @@ export default function Navbar() {
     if (e.metaKey || e.ctrlKey || e.shiftKey) return;
     e.preventDefault();
     closeMobileMenu();
-    const win = window.open(personalInfo.gmailComposeUrl, '_blank');
+    const win = window.open(profile.gmailComposeUrl, '_blank');
     if (!win || win.closed || typeof win.closed === 'undefined') {
-      window.location.href = personalInfo.gmailComposeUrl;
+      window.location.href = profile.gmailComposeUrl;
     }
   };
 
@@ -85,7 +104,8 @@ export default function Navbar() {
         >
           {/* Left: Brand Identity */}
           <a
-            href="#"
+            href="/"
+            onClick={handleBrandClick}
             style={{
               fontFamily: 'var(--font-sans)',
               fontWeight: 600,
@@ -116,6 +136,7 @@ export default function Navbar() {
               <a
                 key={link.label}
                 href={link.href}
+                onClick={(e) => handleNavLinkClick(e, link.href)}
                 style={{
                   fontFamily: 'var(--font-sans)',
                   fontSize: '0.875rem',
@@ -135,7 +156,7 @@ export default function Navbar() {
           {/* Right: Action Link & Mobile Menu Button */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <a
-              href={personalInfo.gmailComposeUrl}
+              href={profile.gmailComposeUrl}
               target="_blank"
               rel="noopener noreferrer"
               onClick={handleLetsTalkClick}
@@ -212,7 +233,7 @@ export default function Navbar() {
               <a
                 key={link.label}
                 href={link.href}
-                onClick={closeMobileMenu}
+                onClick={(e) => handleNavLinkClick(e, link.href)}
                 style={{
                   fontFamily: 'var(--font-sans)',
                   fontSize: '1rem',
@@ -230,7 +251,7 @@ export default function Navbar() {
 
             <div style={{ paddingTop: '0.5rem', borderTop: '1px solid var(--color-border-subtle)' }}>
               <a
-                href={personalInfo.gmailComposeUrl}
+                href={profile.gmailComposeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={handleMobileLetsTalkClick}

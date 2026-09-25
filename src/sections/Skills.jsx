@@ -1,10 +1,11 @@
 import React from 'react';
 import { Container, SectionHeading } from '../components';
-import { skillsCategories } from '../data/portfolioData';
+import { usePortfolioData } from '../hooks/usePortfolioData';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 export default function Skills() {
   const [sectionRef, isVisible] = useScrollReveal(0.12);
+  const { skills } = usePortfolioData();
 
   return (
     <section
@@ -34,7 +35,7 @@ export default function Skills() {
             marginTop: 'var(--space-8, 2rem)'
           }}
         >
-          {skillsCategories.map((group, idx) => (
+          {skills.map((group, idx) => (
             <div
               key={group.category}
               className="skills-row"

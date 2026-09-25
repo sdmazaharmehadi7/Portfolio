@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, SectionHeading } from '../components';
-import { selectedProjects } from '../data/portfolioData';
+import { usePortfolioData } from '../hooks/usePortfolioData';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 // Minimal monochrome architectural schematic thumbnails for optional preview
@@ -78,6 +78,7 @@ function ProjectSchematic({ type }) {
 export default function Projects() {
   const [sectionRef, isVisible] = useScrollReveal(0.1);
   const [hoveredProject, setHoveredProject] = useState(null);
+  const { projects } = usePortfolioData();
 
   return (
     <section
@@ -107,7 +108,7 @@ export default function Projects() {
             marginTop: 'var(--space-8, 2rem)'
           }}
         >
-          {selectedProjects.map((project) => {
+          {projects.map((project) => {
             const isHovered = hoveredProject === project.id;
             const primaryLink = project.liveUrl || project.githubUrl;
 

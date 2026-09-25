@@ -1,9 +1,11 @@
 import React from 'react';
 import { Container, SectionHeading, Button } from '../components';
+import { usePortfolioData } from '../hooks/usePortfolioData';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 export default function Resume() {
   const [sectionRef, isVisible] = useScrollReveal(0.12);
+  const { resumeUrl } = usePortfolioData();
 
   return (
     <section
@@ -36,7 +38,7 @@ export default function Resume() {
         >
           {/* Primary Action: View Resume in Browser */}
           <Button
-            href="/resume.pdf"
+            href={resumeUrl || "/resume.pdf"}
             target="_blank"
             rel="noopener noreferrer"
             variant="primary"
@@ -49,7 +51,7 @@ export default function Resume() {
 
           {/* Secondary Action: Download PDF */}
           <Button
-            href="/resume.pdf"
+            href={resumeUrl || "/resume.pdf"}
             download="Sayyad_Mazahar_Mehadi_Resume.pdf"
             variant="secondary"
             size="lg"

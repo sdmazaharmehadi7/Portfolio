@@ -1,42 +1,43 @@
 import React, { useState } from 'react';
 import { Container, Divider } from '../components';
-import { personalInfo } from '../data/portfolioData';
+import { usePortfolioData } from '../hooks/usePortfolioData';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 export default function Contact() {
   const [sectionRef, isVisible] = useScrollReveal(0.12);
   const [hoveredLink, setHoveredLink] = useState(null);
+  const { profile, resumeUrl } = usePortfolioData();
 
   const handleEmailClick = (e) => {
     if (e.metaKey || e.ctrlKey || e.shiftKey) return;
     e.preventDefault();
-    const win = window.open(personalInfo.gmailComposeUrl, '_blank');
+    const win = window.open(profile.gmailComposeUrl, '_blank');
     if (!win || win.closed || typeof win.closed === 'undefined') {
-      window.location.href = personalInfo.gmailComposeUrl;
+      window.location.href = profile.gmailComposeUrl;
     }
   };
 
   const contactLinks = [
     {
       label: 'GitHub',
-      href: personalInfo.github,
+      href: profile.github,
       isExternal: true
     },
     {
       label: 'LinkedIn',
-      href: personalInfo.linkedin,
+      href: profile.linkedin,
       isExternal: true
     },
     {
       label: 'Email Me',
-      href: personalInfo.gmailComposeUrl,
+      href: profile.gmailComposeUrl,
       isExternal: true,
       onClick: handleEmailClick,
-      ariaLabel: `Open Gmail compose to email ${personalInfo.email}`
+      ariaLabel: `Open Gmail compose to email ${profile.email}`
     },
     {
       label: 'Resume',
-      href: '/resume.pdf',
+      href: resumeUrl || '/resume.pdf',
       isExternal: true
     }
   ];
@@ -158,7 +159,7 @@ export default function Contact() {
         >
           <span>Direct:</span>
           <a
-            href={personalInfo.gmailComposeUrl}
+            href={profile.gmailComposeUrl}
             target="_blank"
             rel="noopener noreferrer"
             onClick={handleEmailClick}
@@ -170,9 +171,9 @@ export default function Contact() {
             }}
             onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-primary)')}
             onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--color-secondary)')}
-            aria-label={`Open Gmail compose to email ${personalInfo.email}`}
+            aria-label={`Open Gmail compose to email ${profile.email}`}
           >
-            {personalInfo.email}
+            {profile.email}
           </a>
         </div>
 

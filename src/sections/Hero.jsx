@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect, Suspense, lazy } from 'react';
 import { Container, Button } from '../components';
-import { personalInfo } from '../data/portfolioData';
+import { usePortfolioData } from '../hooks/usePortfolioData';
 import { STAGE_METADATA, STAGE_ORDER } from '../three/LLMArchitecture';
 
 const LLMScene = lazy(() => import('../three/LLMScene'));
@@ -34,6 +34,7 @@ export default function Hero() {
   const [activeStage, setActiveStage] = useState(null);
   const [isExploded, setIsExploded] = useState(false);
   const [resetSignal, setResetSignal] = useState(0);
+  const { profile } = usePortfolioData();
 
   // Toggle stage or select new stage
   const handleSelectStage = useCallback((stageId) => {
@@ -95,7 +96,7 @@ export default function Hero() {
                 marginBottom: 'var(--space-4, 1rem)'
               }}
             >
-              AI • FULL-STACK • AGENTIC SYSTEMS
+              {profile.eyebrow || 'AI • FULL-STACK • AGENTIC SYSTEMS'}
             </div>
 
             {/* Main Heading */}
@@ -112,7 +113,7 @@ export default function Hero() {
                 whiteSpace: 'pre-line'
               }}
             >
-              {`Building intelligent\nsoftware for the\nreal world.`}
+              {profile.headline || `Building intelligent\nsoftware for the\nreal world.`}
             </h1>
 
             {/* Supporting Text */}
@@ -127,8 +128,7 @@ export default function Hero() {
                 maxWidth: '460px'
               }}
             >
-              Computer Science student focused on AI agents, LLM applications,
-              RAG systems, and modern full-stack development.
+              {profile.summary || 'Computer Science student focused on AI agents, LLM applications, RAG systems, and modern full-stack development.'}
             </p>
 
             {/* Call to Action Buttons */}
@@ -145,7 +145,7 @@ export default function Hero() {
                 Explore my work
               </Button>
               <Button
-                href={personalInfo.github}
+                href={profile.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 variant="secondary"
