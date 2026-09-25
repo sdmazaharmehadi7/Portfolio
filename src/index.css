@@ -1,0 +1,224 @@
+@import './styles/tokens.css';
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: var(--color-primary);
+  color-scheme: dark;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--color-bg);
+  color: var(--color-primary);
+  line-height: var(--line-height-normal);
+  overflow-x: hidden;
+}
+
+/* Custom minimal scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Text Selection */
+::selection {
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--color-primary);
+}
+
+/* Focus States */
+:focus-visible {
+  outline: 1px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+/* Base Link Reset */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Base Button Reset */
+button {
+  font-family: inherit;
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* Responsive Navigation Utilities */
+@media (min-width: 768px) {
+  .mobile-menu-btn {
+    display: none !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .desktop-nav,
+  .desktop-cta {
+    display: none !important;
+  }
+}
+
+/* Subtle, Slow, Intentional Hero Text & Visual Entrance */
+@keyframes heroFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-hero-eyebrow {
+  opacity: 0;
+  animation: heroFadeUp 0.75s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1)) 0.05s forwards;
+}
+
+.animate-hero-heading {
+  opacity: 0;
+  animation: heroFadeUp 0.85s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1)) 0.16s forwards;
+}
+
+.animate-hero-text {
+  opacity: 0;
+  animation: heroFadeUp 0.85s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1)) 0.28s forwards;
+}
+
+.animate-hero-actions {
+  opacity: 0;
+  animation: heroFadeUp 0.85s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1)) 0.40s forwards;
+}
+
+.animate-hero-vis {
+  opacity: 0;
+  animation: heroFadeUp 1.05s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1)) 0.22s forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .animate-hero-eyebrow,
+  .animate-hero-heading,
+  .animate-hero-text,
+  .animate-hero-actions,
+  .animate-hero-vis {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Hero Grid Desktop Proportions (35-37% content, 63-65% visualization) */
+@media (min-width: 1024px) {
+  .hero-grid {
+    grid-template-columns: minmax(320px, 37%) minmax(0, 63%) !important;
+    align-items: center !important;
+    gap: clamp(2rem, 3.5vw, 3.5rem) !important;
+  }
+}
+
+@media (max-width: 1023px) {
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+  .hero-content {
+    max-width: 100% !important;
+  }
+  .hero-vis-container {
+    height: clamp(380px, 55vh, 480px) !important;
+  }
+}
+
+
+/* Projects Editorial List Mobile Adjustment */
+@media (max-width: 768px) {
+  .project-schematic-preview {
+    display: none !important;
+  }
+}
+
+/* Responsive Grid Adjustments for Mobile (<640px) */
+@media (max-width: 640px) {
+  .skills-row {
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
+  }
+
+  .experience-item-row {
+    grid-template-columns: 1fr !important;
+    gap: 0.5rem !important;
+  }
+}
+
+/* Subtle Generative Light Movement for Contact Section */
+@keyframes ambientDrift {
+  0% {
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    opacity: 0.08;
+  }
+  50% {
+    transform: translate(-46%, -54%) scale(1.18) rotate(12deg);
+    opacity: 0.14;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    opacity: 0.08;
+  }
+}
+
+.generative-light {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 650px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.18) 0%, rgba(186, 230, 253, 0.07) 45%, rgba(0, 0, 0, 0) 70%);
+  filter: blur(100px);
+  pointer-events: none;
+  animation: ambientDrift 16s ease-in-out infinite;
+  z-index: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .generative-light {
+    animation: none !important;
+    opacity: 0.08 !important;
+  }
+}
