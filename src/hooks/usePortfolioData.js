@@ -24,6 +24,8 @@ export function usePortfolioData() {
     education: fallbackExperienceData.education,
     certifications: [],
     resumeUrl: fallbackPersonalInfo.resume,
+    resumeFilename: 'Sayyad_Mazahar_Mehadi_Resume.pdf',
+    resumeUploadedAt: null,
     isLive: false,
     loading: isSupabaseConfigured
   });
@@ -134,9 +136,12 @@ export function usePortfolioData() {
           const cert = certificationsRes.status === 'fulfilled' && certificationsRes.value.data;
           const certifications = cert?.length ? cert : [];
 
-          // Format resume URL
+          // Format resume URL + metadata
           const r = resumeRes.status === 'fulfilled' && resumeRes.value.data;
           const resumeUrl = r?.file_url || profile.resume || '/resume.pdf';
+          // 'filename' is the actual DB column name; fall back gracefully
+          const resumeFilename = r?.filename || r?.file_name || 'Sayyad_Mazahar_Mehadi_Resume.pdf';
+          const resumeUploadedAt = r?.uploaded_at || r?.updated_at || null;
 
           return {
             profile,
@@ -148,6 +153,8 @@ export function usePortfolioData() {
             education,
             certifications,
             resumeUrl,
+            resumeFilename,
+            resumeUploadedAt,
             isLive: Boolean(p || proj?.length),
             loading: false
           };
