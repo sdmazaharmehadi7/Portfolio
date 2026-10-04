@@ -119,7 +119,7 @@ export default function Navbar() {
             }}
             onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.75')}
             onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
-            aria-label="Mazahar Home"
+            aria-label="Sayyad Mazahar Mehadi — Back to top"
           >
             MAZAHAR
           </a>

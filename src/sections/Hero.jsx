@@ -65,7 +65,8 @@ export default function Hero() {
 
   return (
     <section
-      id="about"
+      id="hero"
+      aria-label="Sayyad Mazahar Mehadi — Software Developer and AI Engineer"
       style={{
         paddingTop: 'clamp(2.5rem, 6vw, 4.5rem)',
         paddingBottom: 'clamp(2.5rem, 6vw, 4.5rem)',
